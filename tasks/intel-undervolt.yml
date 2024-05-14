@@ -1,0 +1,17 @@
+- name: intel-undervolt | Configuration
+  become: true
+  ansible.builtin.lineinfile:
+    path: "/etc/intel-undervolt.conf"
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: present
+  loop:
+    - { regexp: "^undervolt 0 'CPU' 0$", line: "undervolt 0 'CPU' -143.6" }
+    - { regexp: "^undervolt 2 'CPU Cache' 0$", line: "undervolt 2 'CPU Cache' -143.6" }
+
+- name: intel-undervolt | Apply persistent undervolt
+  become: true
+  ansible.builtin.systemd_service:
+    name: intel-undervolt.service
+    state: started
+    enabled: true

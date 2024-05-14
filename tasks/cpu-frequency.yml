@@ -1,0 +1,18 @@
+- name: cpu-frequency | Configuration
+  become: true
+  ansible.builtin.lineinfile:
+    path: "/etc/default/cpupower"
+    line: "{{ item.line }}"
+    state: present
+  loop:
+    - { line: "governor='powersave'" }
+    - { line: 'min_freq="0.80GHz"' }
+    - { line: 'max_freq="4.00GHz"' }
+    - { line: "perf_bias=8" }
+
+- name: cpu-frequency | Apply persistent cpu frequency
+  become: true
+  ansible.builtin.systemd_service:
+    name: cpupower.service
+    state: started
+    enabled: true

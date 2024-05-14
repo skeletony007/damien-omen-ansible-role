@@ -1,0 +1,4 @@
+dependencies:
+  - role: intel-undervolt
+  - role: cpupower
+  - role: util-linux

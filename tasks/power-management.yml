@@ -1,0 +1,17 @@
+- name: power-management | Disable Bluetooth
+  become: true
+  ansible.builtin.lineinfile:
+    create: true
+    path: "/etc/udev/rules.d/50-bluetooth.rules"
+    line: 'SUBSYSTEM=="rfkill", ATTR{type}=="bluetooth", ATTR{state}="0"'
+    mode: "0660"
+    state: present
+
+- name: power-management | Disable Wake-on-LAN
+  become: true
+  ansible.builtin.lineinfile:
+    create: true
+    path: "/etc/udev/rules.d/81-wifi-powersave.rules"
+    line: 'ACTION=="add", SUBSYSTEM=="net", KERNEL=="wl*", RUN+="/usr/bin/iw dev $name set power_save on"'
+    mode: "0660"
+    state: present

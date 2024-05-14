@@ -1,0 +1,5 @@
+- import_tasks: intel-undervolt.yml
+- import_tasks: cpu-frequency.yml
+- import_tasks: ssd.yml
+- import_tasks: power-management.yml
+- import_tasks: thunderbolt.yml
