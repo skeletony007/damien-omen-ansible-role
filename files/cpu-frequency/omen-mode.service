@@ -1,0 +1,8 @@
+[Unit]
+Description=Set Hardware Performance
+
+[Service]
+ExecStart=/home/skeletony007/.local/scripts/omen-mode
+
+[Install]
+WantedBy=multi-user.target

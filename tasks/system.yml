@@ -1,0 +1,29 @@
+- name: system | Set time zone to Europe/London (BST, +0100)
+  become: true
+  ansible.builtin.file:
+    path: /etc/localtime
+    src: /usr/share/zoneinfo/Europe/London
+    state: link
+
+- name: system | Synchronize clock with the network
+  become: true
+  shell: ntpd -qg
+
+- name: system | Generate /etc/adjtime (assumes hardware clock is UTC)
+  become: true
+  shell: hwclock --systohc
+
+- name: system | Set hostname
+  become: true
+  ansible.builtin.hostname:
+    name: DAMIEN-OMEN
+    use: systemd
+
+- name: system | Apply persistent hostname
+  become: true
+  ansible.builtin.copy:
+    src: system/hostname
+    dest: /etc/hostname
+    owner: root
+    group: root
+    mode: "0644"

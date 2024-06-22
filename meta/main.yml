@@ -1,4 +1,7 @@
 dependencies:
   - role: intel-undervolt
   - role: cpupower
-  - role: util-linux
+  - role: util-linux # contains fstrim.timer (ssd)
+  - role: xcalib
+  - role: inetutils # contains hostname (system)
+  - role: ntp # network time protocol (system)

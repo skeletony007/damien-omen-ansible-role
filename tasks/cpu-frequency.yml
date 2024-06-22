@@ -1,18 +1,15 @@
-- name: cpu-frequency | Configuration
+- name: cpu-frequency | Copy omen-mode.service to /etc/systemd/system/
   become: true
-  ansible.builtin.lineinfile:
-    path: "/etc/default/cpupower"
-    line: "{{ item.line }}"
-    state: present
-  loop:
-    - { line: "governor='powersave'" }
-    - { line: 'min_freq="0.80GHz"' }
-    - { line: 'max_freq="4.00GHz"' }
-    - { line: "perf_bias=8" }
+  ansible.builtin.copy:
+    src: cpu-frequency/omen-mode.service
+    dest: /etc/systemd/system/omen-mode.service
+    owner: root
+    group: root
+    mode: "0644"
 
-- name: cpu-frequency | Apply persistent cpu frequency
+- name: cpu-frequency | Apply persistent cpu-frequency
   become: true
   ansible.builtin.systemd_service:
-    name: cpupower.service
+    name: omen-mode.service
     state: started
     enabled: true
