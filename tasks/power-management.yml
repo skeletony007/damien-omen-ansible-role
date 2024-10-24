@@ -1,7 +1,3 @@
-- name: power-management | Disable Bluetooth
-  become: true
-  shell: rfkill block bluetooth
-
 - name: power-management | Disable Bluetooth persistently
   become: true
   ansible.builtin.copy:
@@ -10,6 +6,8 @@
     owner: root
     group: root
     mode: "0660"
+  notify:
+    - power-management | Disable Bluetooth
 
 - name: power-management | Disable Wake-on-LAN
   become: true

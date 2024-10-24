@@ -1,11 +1,14 @@
-- name: cpu-frequency | Copy omen-mode.service to /etc/systemd/system/
+- name: cpu-frequency | Copy Performance Mode pre-requisites
   become: true
   ansible.builtin.copy:
-    src: cpu-frequency/omen-mode.service
-    dest: /etc/systemd/system/omen-mode.service
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
     owner: root
     group: root
-    mode: "0644"
+    mode: "{{ item.mode }}"
+  loop:
+    - { src: cpu-frequency/omen-mode, dest: /usr/bin/omen-mode, mode: "0777" }
+    - { src: cpu-frequency/omen-mode.service, dest: /etc/systemd/system/omen-mode.service, mode: "0644" }
 
 - name: cpu-frequency | Apply persistent cpu-frequency
   become: true

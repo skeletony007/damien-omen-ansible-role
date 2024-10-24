@@ -1,0 +1,85 @@
+#!/usr/bin/env sh
+
+echo 'cpupower: Setting scaling governor'
+# valid governors: ondemand, performance, powersave, conservative, userspace.
+# Governor        Description
+# performance     Run the CPU at the maximum frequency, obtained from /sys/devices/system/cpu/cpuX/cpufreq/scaling_max_freq.
+# powersave       Run the CPU at the minimum frequency, obtained from /sys/devices/system/cpu/cpuX/cpufreq/scaling_min_freq.
+# userspace       Run the CPU at user specified frequencies, configurable via /sys/devices/system/cpu/cpuX/cpufreq/scaling_setspeed.
+# ondemand        Scales the frequency dynamically according to current load. Jumps to the highest frequency and then possibly back off as the idle time increases.
+# conservative    Scales the frequency dynamically according to current load. Scales the frequency more gradually than ondemand.
+cpupower frequency-set -g powersave
+echo 'cpupower: Setting minimum frequencies'
+cpupower frequency-set -d 0.80GHz
+echo 'cpupower: Setting maximum frequencies'
+cpupower frequency-set -u 4.00GHz
+echo 'cpupower: Setting Intel performance and energy bias hint (EPB)'
+# EPB value     String
+# 0             performance
+# 4             balance-performance
+# 6             normal, default
+# 8             balance-power
+# 15            power 
+cpupower set -b 8
+
+echo 'performance: Getting ready'
+modprobe -r ec_sys
+modprobe ec_sys write_support=1
+
+echo 'performance: Power related | Performance Mode | Setting EC register 0x95 to 0x31'
+echo -n -e "\0x31" | dd of=/sys/kernel/debug/ec/ec0/io bs=1 seek=149 count=1 conv=notrunc
+
+# references
+# https://github.com/alou-S/omen-fan/blob/main/docs/probes.md#power-related
+# https://wiki.archlinux.org/title/HP_Omen_16-c0140AX
+
+# # List of EC Probes
+#
+# # General Info
+# Most of these registers were found by monitoring using ec_probe while tweaking around in the Omen Fan Control in Windows.
+# 
+# Registers with * are writable and effect the system.  
+# Registers with ** are writable and effect the system but immediately reset.  
+# Registers with ~ are writable but have no visible effect on Linux systems.  
+# Registers with ? are writable but something effects the system and sometimes doesn't.  
+# 
+# 
+# ## Fan related
+# ```
+# 0x34*   Fan 1 Speed Set     units of 100RPM  
+# 0x2E    Fan 1 Speed %       Range 0 - 0x64 (100)
+# 0xB1    Fan 1 Speed         Range 0 - 0x16
+# 
+# 0x35*   Fan 2 Speed Set     units of 100RPM
+# 0x2F    Fan 2 Speed %       Range 0 - 0x64 (100)
+# 0xB3    Fan 2 Speed         Range 0 - 0x16 
+# 
+# 0xEC?   Fan Boost           00 (Boost OFF), 0x0C (Boost ON)
+# 0xF4*   Fan State           00 (Enable), 02 (Disable)
+# ```
+# 
+# ## Temperature and BIOS related
+# ```
+# 0x57    CPU Temp            int °C
+# 0xB7    GPU Temp            int °C
+# 
+# 0x62*   BIOS Control        00 (Enabled) , 06 (Disabled)
+# 0x63*   Timer               Counts down from whatever set to 0.
+#                             Set to 0x78 (120 secs) when certian EC changes are made.
+#                             Resets BIOS control and other values when reaches 0.
+#                             
+# ```
+# 
+# ## Power Related
+# ```
+# 0x95*    Performance        Technically Performance Mode. Set to 0x31 to mitigate some
+#                             weird perfomance issues and throttling. 0x01 for Victus Laptops.
+# 
+#                             Found to be tweaked via Omen Gaming Hub when changing performance modes.
+#                             Ranging from 0x10 to 0x50 in Balanced mode and
+#                             0x11 to 0x51 in performance mode incrementing in values of 0x10.
+# 
+# 0xBA**  Thermal Power       Seems to determine the absolute maximum Power (CPU + GPU) the laptop can consume
+#                             Ranges from 00 to 05 with 05 being 50 Watts.
+#                             Seems to momentarily effect Linux systems before being immediately reset.
+# ```

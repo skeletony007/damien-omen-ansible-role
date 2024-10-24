@@ -1,0 +1,4 @@
+- name: power-management | Disable Bluetooth
+  become: true
+  ansible.builtin.command: rfkill block bluetooth
+  changed_when: true

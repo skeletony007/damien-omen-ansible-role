@@ -1,0 +1,8 @@
+- name: fstab | Fstab
+  become: true
+  ansible.builtin.copy:
+    src: fstab/fstab
+    dest: /etc/fstab
+    owner: root
+    group: root
+    mode: "0644"

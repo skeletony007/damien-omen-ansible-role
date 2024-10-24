@@ -1,0 +1,9 @@
+/dev/nvme0n1p1    /boot/efi    vfat    rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=ascii,shortname=mixed,utf8,errors=remount-ro    0 2
+/dev/nvme0n1p2    none         swap          defaults             0 0
+/dev/nvme0n1p3    /            ext4          rw,noatime           0 1
+
+/dev/sda3    /media/skeletony007/OS    ext4    nofail,rw,noatime    0 2
+
+#/media/skeletony007/OS/Users/skeletony007/personal/    /home/skeletony007/personal/    none    nofail,defaults,bind    0 0
+#/media/skeletony007/OS/Users/skeletony007/work/    /home/skeletony007/work/    none    nofail,defaults,bind    0 0
+#/media/skeletony007/OS/Users/skeletony007/Pictures/    /home/skeletony007/Pictures/    none    nofail,defaults,bind    0 0

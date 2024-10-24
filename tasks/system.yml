@@ -7,11 +7,13 @@
 
 - name: system | Synchronize clock with the network
   become: true
-  shell: ntpd -qg
+  ansible.builtin.command: ntpd -qg
+  changed_when: true
 
 - name: system | Generate /etc/adjtime (assumes hardware clock is UTC)
   become: true
-  shell: hwclock --systohc
+  ansible.builtin.command: hwclock --systohc
+  changed_when: true
 
 - name: system | Set hostname
   become: true

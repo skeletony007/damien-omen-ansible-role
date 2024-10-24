@@ -1,8 +1,10 @@
 [Unit]
-Description=Set Hardware Performance
+Description=OMEN Hardware Performance Mode Service
+After=multi-user.target suspend.target hibernate.target hybrid-sleep.target
 
 [Service]
-ExecStart=/home/skeletony007/.local/scripts/omen-mode
+Type=oneshot
+ExecStart=/usr/bin/omen-mode
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=multi-user.target suspend.target hibernate.target hybrid-sleep.target

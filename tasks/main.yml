@@ -1,7 +1,10 @@
-- import_tasks: intel-undervolt.yml
-- import_tasks: cpu-frequency.yml
-- import_tasks: ssd.yml
-- import_tasks: power-management.yml
-- import_tasks: thunderbolt.yml
-- import_tasks: system.yml
-- import_tasks: icc-profiles.yml
+- name: Include tasks
+  ansible.builtin.include_tasks: "{{ item }}"
+  loop:
+    - intel-undervolt.yml
+    - cpu-frequency.yml
+    - ssd.yml
+    - power-management.yml
+    - thunderbolt.yml
+    - system.yml
+    - fstab.yml
