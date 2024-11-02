@@ -1,0 +1,37 @@
+#!/bin/env bash
+
+# `xrandr --output eDP-1 --brightness 1.0`
+
+acpi_dev=nv_backlight
+
+max_brightness=$(< /sys/class/backlight/$acpi_dev/max_brightness)
+current_brightness=$(< /sys/class/backlight/$acpi_dev/brightness)
+
+usage="usage: backlight [options]
+  where options are:
+  -help
+  -set <percentage>
+  -inc <percentage>
+  -dec <percentage>
+  -get"
+
+case "$1" in
+    -set)
+        echo "$2" > /sys/class/backlight/$acpi_dev/brightness
+        ;;
+    -inc)
+        echo $((current_brightness + $2 * max_brightness / 100)) > /sys/class/backlight/$acpi_dev/brightness
+        ;;
+    -dec)
+        echo $((current_brightness - $2 * max_brightness / 100)) > /sys/class/backlight/$acpi_dev/brightness
+        ;;
+    -get)
+        echo "$current_brightness"
+        ;;
+    -help)
+        echo "$usage"
+        ;;
+    *)
+        echo -e "backlight: unrecognized argument '$1'\n$usage"
+        ;;
+esac

@@ -1,0 +1,24 @@
+- name: backlight | Set "video" group sys filesystem permissions
+  become: true
+  ansible.builtin.copy:
+    src: backlight/backlight.rules
+    dest: /etc/udev/rules.d/backlight.rules
+    owner: root
+    group: root
+    mode: "0660"
+
+- name: backlight | Add xbacklight script to /usr/bin directory
+  become: true
+  ansible.builtin.copy:
+    src: backlight/xbacklight
+    dest: /usr/bin/xbacklight
+    owner: root
+    group: root
+    mode: "0777"
+
+- name: backlight | Add the video group for user {{ ansible_env.USER }}
+  become: true
+  ansible.builtin.user:
+    append: true
+    name: "{{ ansible_env.USER }}"
+    groups: video

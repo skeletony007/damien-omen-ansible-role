@@ -8,3 +8,4 @@
     - thunderbolt.yml
     - system.yml
     - fstab.yml
+    - backlight.yml
