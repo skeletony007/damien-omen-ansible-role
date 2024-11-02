@@ -10,6 +10,14 @@
     - { src: cpu-frequency/omen-mode, dest: /usr/bin/omen-mode, mode: "0777" }
     - { src: cpu-frequency/omen-mode.service, dest: /etc/systemd/system/omen-mode.service, mode: "0644" }
 
+- name: cpu-frequency | Setting kernel module parameter ec_sys.write_support=1 for changing EC registers
+  become: true
+  community.general.modprobe:
+    name: ec_sys
+    state: present
+    params: "write_support=1"
+    persistent: present
+
 - name: cpu-frequency | Apply persistent cpu-frequency
   become: true
   ansible.builtin.systemd_service:
