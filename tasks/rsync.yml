@@ -1,0 +1,20 @@
+- name: rsync | Create backup weekly timer
+  become: true
+  ansible.builtin.copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: "644"
+  loop:
+    - { src: rsync/backup.user.timer, dest: /usr/lib/systemd/user/backup.user.timer }
+    - { src: rsync/backup.user.service, dest: /usr/lib/systemd/user/backup.user.service }
+
+- name: rsync | Enable backup user timer
+  become_user: "{{ ansible_env.USER }}"
+  ansible.builtin.systemd_service:
+    name: backup.user.timer
+    scope: user
+    daemon_reload: true
+    state: started
+    enabled: true

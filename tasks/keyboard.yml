@@ -1,0 +1,27 @@
+- name: keyboard | Setting console/keyboard layout using persistent configuration file
+  become: true
+  ansible.builtin.copy:
+    src: keyboard/vconsole.conf
+    dest: /etc/vconsole.conf
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: keyboard | Setting session console/keyboard layout using loadkeys
+  ansible.builtin.command: loadkeys gb
+  failed_when: false
+  changed_when: true
+
+- name: keyboard | Setting keyboard layout using X configuration file
+  become: true
+  ansible.builtin.copy:
+    src: keyboard/00-keyboard.conf
+    dest: /etc/X11/xorg.conf.d/00-keyboard.conf
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: keyboard | Setting keyboard layout using setxkbmap for this X session
+  ansible.builtin.command: setxkbmap -layout gb -model pc105
+  failed_when: false
+  changed_when: true

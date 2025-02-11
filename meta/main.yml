@@ -4,3 +4,4 @@ dependencies:
   - role: util-linux # contains fstrim.timer (ssd)
   - role: inetutils # contains hostname (system)
   - role: ntp # network time protocol (system)
+  - role: rsync

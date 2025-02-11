@@ -9,3 +9,5 @@
     - system.yml
     - fstab.yml
     - backlight.yml
+    - keyboard.yml
+    - rsync.yml
