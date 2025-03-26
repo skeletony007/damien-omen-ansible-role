@@ -18,14 +18,5 @@
 - name: system | Set hostname
   become: true
   ansible.builtin.hostname:
-    name: DAMIEN-OMEN
+    name: damien-omen
     use: systemd
-
-- name: system | Apply persistent hostname
-  become: true
-  ansible.builtin.copy:
-    src: system/hostname
-    dest: /etc/hostname
-    owner: root
-    group: root
-    mode: "0644"
