@@ -2,4 +2,13 @@
 Description=Backs up files
 
 [Service]
-ExecStart=/usr/bin/rsync "%h/personal" "%h/work" "%h/.dotfiles" "%h/.password-store" "%h/Pictures" -CERrltm --delete "/media/%u/OS/Users/%u/backup":
+ExecStart=/usr/bin/rsync --archive \
+    --relative \
+    --cvs-exclude \
+    --prune-empty-dirs \
+    "%h/personal" \
+    "%h/work" \
+    "%h/.dotfiles" \
+    "%h/.password-store" \
+    "%h/Pictures" \
+    "/media/%u/OS/Users/%u/backup"
