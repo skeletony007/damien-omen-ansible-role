@@ -7,11 +7,11 @@
     group: root
     mode: "0660"
 
-- name: backlight | Add xbacklight script to /usr/bin directory
+- name: backlight | Add backlight script to /usr/bin directory
   become: true
   ansible.builtin.copy:
-    src: backlight/xbacklight
-    dest: /usr/bin/xbacklight
+    src: backlight/backlight
+    dest: /usr/bin/backlight
     owner: root
     group: root
     mode: "0777"

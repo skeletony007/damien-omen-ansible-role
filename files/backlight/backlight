@@ -8,7 +8,7 @@ max_brightness=$(< /sys/class/backlight/$acpi_dev/max_brightness)
 current_brightness=$(< /sys/class/backlight/$acpi_dev/brightness)
 
 usage="usage: backlight [options]
-  where options are:
+  with options:
   -help
   -set <percentage>
   -inc <percentage>
@@ -16,19 +16,19 @@ usage="usage: backlight [options]
   -get"
 
 case "$1" in
-    -set)
-        echo "$2" > /sys/class/backlight/$acpi_dev/brightness
+    '-set')
+        echo "$2" > "/sys/class/backlight/$acpi_dev/brightness"
         ;;
-    -inc)
-        echo $((current_brightness + $2 * max_brightness / 100)) > /sys/class/backlight/$acpi_dev/brightness
+    '-inc')
+        echo "$((current_brightness + $2 * max_brightness / 100))" > "/sys/class/backlight/$acpi_dev/brightness"
         ;;
-    -dec)
-        echo $((current_brightness - $2 * max_brightness / 100)) > /sys/class/backlight/$acpi_dev/brightness
+    '-dec')
+        echo "$((current_brightness - $2 * max_brightness / 100))" > "/sys/class/backlight/$acpi_dev/brightness"
         ;;
-    -get)
+    '-get')
         echo "$current_brightness"
         ;;
-    -help)
+    '-help')
         echo "$usage"
         ;;
     *)
