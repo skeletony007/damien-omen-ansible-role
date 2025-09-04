@@ -6,8 +6,7 @@
     owner: root
     group: root
     mode: "0660"
-  notify:
-    - power-management | Disable Bluetooth
+  notify: power-management | Disable Bluetooth
 
 - name: power-management | Disable Wake-on-LAN
   become: true
