@@ -7,3 +7,11 @@
   become: true
   ansible.builtin.command: mkinitcpio -P
   changed_when: true
+
+- name: system | Set Firefox as default web browser
+  ansible.builtin.command: xdg-settings set default-web-browser firefox.desktop
+  changed_when: true
+
+- name: system | Set gsettings color-scheme to prefer-dark
+  ansible.builtin.command: gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+  changed_when: true

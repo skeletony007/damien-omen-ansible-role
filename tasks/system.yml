@@ -38,3 +38,15 @@
     group: root
     mode: "0644"
   notify: system | Regenerate the initramfs
+
+- name: system | Check gsettings color-scheme
+  ansible.builtin.command: gsettings get org.gnome.desktop.interface color-scheme
+  register: res
+  changed_when: not 'prefer-dark' in res.stdout
+  notify: system | Set gsettings color-scheme to prefer-dark
+
+- name: system | Check Firefox is default web browser
+  ansible.builtin.command: xdg-settings get default-web-browser
+  register: res
+  changed_when: not 'firefox.desktop' in res.stdout
+  notify: system | Set Firefox as default web browser
