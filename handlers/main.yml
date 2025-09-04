@@ -2,3 +2,8 @@
   become: true
   ansible.builtin.command: rfkill block bluetooth
   changed_when: true
+
+- name: system | Regenerate the initramfs
+  become: true
+  ansible.builtin.command: mkinitcpio -P
+  changed_when: true

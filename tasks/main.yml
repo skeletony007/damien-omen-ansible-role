@@ -1,3 +1,4 @@
+# TODO: gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
 - name: Include tasks
   ansible.builtin.include_tasks: "{{ item }}"
   loop:
@@ -11,3 +12,4 @@
     - backlight.yml
     - keyboard.yml
     - rsync.yml
+    - greetd.yml

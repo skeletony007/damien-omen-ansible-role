@@ -1,0 +1,11 @@
+# <https://www.reddit.com/r/hyprland/comments/1e5qgoj/comment/m1ks37u>
+[terminal]
+vt = 1
+
+[default_session]
+command = "agreety --cmd /bin/sh"
+user = "greeter"
+
+[initial_session]
+command = "Hyprland"
+user = "{{ ansible_env.USER }}"
