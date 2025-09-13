@@ -1,0 +1,9 @@
+- name: grub | Configure GRUB
+  become: true
+  ansible.builtin.copy:
+    src: grub/grub
+    dest: /etc/default/grub
+    owner: root
+    group: root
+    mode: "0644"
+  notify: grub | mkconfig

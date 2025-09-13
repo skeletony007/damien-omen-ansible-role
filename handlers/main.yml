@@ -15,3 +15,8 @@
 - name: system | Set gsettings color-scheme to prefer-dark
   ansible.builtin.command: gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
   changed_when: true
+
+- name: grub | mkconfig
+  become: true
+  ansible.builtin.command: grub-mkconfig -o /boot/grub/grub.cfg
+  changed_when: true

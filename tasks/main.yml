@@ -12,3 +12,4 @@
     - keyboard.yml
     - rsync.yml
     - greetd.yml
+    - grub.yml
