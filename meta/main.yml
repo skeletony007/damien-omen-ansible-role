@@ -9,6 +9,10 @@ dependencies:
   # system
   - role: inetutils
   - role: ntp
+  # system/graphics
+  - role: xf86-video-nouveau
+  - role: mesa
+  - role: lib32-mesa
 
   # rsync
   - role: rsync

@@ -21,14 +21,6 @@
     name: damien-omen
     use: systemd
 
-# NOTE: Highly dependent on system configuration, so not included in meta/main.yml dependencies
-# <https://wiki.archlinux.org/title/NVIDIA>
-- name: Archlinux | Install official NVIDIA graphics card drivers for linux (non-lts) with pacman
-  become: true
-  community.general.pacman:
-    name: nvidia
-    state: present
-
 - name: system | Configure the initramfs
   become: true
   ansible.builtin.copy:
