@@ -16,3 +16,12 @@
     owner: root
     group: root
     mode: "0660"
+
+- name: power-management | Setup ACPI events
+  become: true
+  ansible.builtin.copy:
+    src: power-management/logind.conf
+    dest: /etc/systemd/logind.conf
+    owner: root
+    group: root
+    mode: "0644"
